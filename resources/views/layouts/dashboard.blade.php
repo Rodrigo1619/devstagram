@@ -43,9 +43,11 @@
                 {{-- Mostrar los posts, como es un arreglo debemos iterarlo --}}
                 @foreach ($posts as $post )
                     <div>
-                        {{-- Usamos asset para mostrar la imagen y le concatenamos el $post->imagen porque es el nombre
-                            guardado en la base de datos--}}
-                        <img src="{{ asset('uploads') . '/' . $post->imagen}}" alt="Imagen del post {{$post->titulo}}" >
+                        <a href="{{route('posts.show', ['post'=> $post, 'user'=> $user])}}">
+                            {{-- Usamos asset para mostrar la imagen y le concatenamos el $post->imagen porque es el nombre
+                                guardado en la base de datos--}}
+                            <img src="{{ asset('uploads') . '/' . $post->imagen}}" alt="Imagen del post {{$post->titulo}}" >
+                        </a>
                     </div>
                 @endforeach
             </div>
