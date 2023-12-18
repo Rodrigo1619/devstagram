@@ -43,4 +43,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    //relaciones con posts
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+    //si nos salimos de algunas convenciones de laravel debemos hacer referencia al campo que deseamos
+    /* public function posts(){
+        return $this->hasMany(Post::class, 'id_algo');
+    } */
 }

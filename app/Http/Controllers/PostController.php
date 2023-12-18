@@ -12,10 +12,16 @@ class PostController extends Controller
         //protegemos las vistas, dado que para poder interactuar (dar like, comentar, ect) debe tener cuenta el usuario
         $this->middleware('auth');
     }
+
     public function index(User $user){
-        //dd(auth()->user()); //aqui es donde ire guardando si el usuario esta autenticado
+        //traerme todos los posts de un usuario y paginarlos
+        $posts = Post::where('user_id', $user->id)->paginate(20);
         
-        return view('layouts.dashboard', ['user'=> $user]); //el arreglo es para pasarle la informacion del modelo al view
+        
+        return view('layouts.dashboard', [
+            'user'=> $user,
+            'posts' => $posts
+        ]); //el arreglo es para pasarle la informacion del modelo al view
     }
     public function create(){
         return view('posts.create');
@@ -27,13 +33,13 @@ class PostController extends Controller
             'imagen' => 'required'
         ]);
 
-        Post::create([
+        /* Post::create([
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
             'imagen' => $request->imagen,
             //como el que hace la publicacion es el que esta autenticado, se debe guardar su id
             'user_id' => auth()->user()->id
-        ]);
+        ]); */
 
         //otra forma de hacer registro (no me gusta xd)
         /* $post = new Post();
@@ -42,6 +48,15 @@ class PostController extends Controller
         $post->imagen = $request->imagen;
         $post->user_id = auth()->user()->id;
         $post->save() */
+
+        //otra forma de validar pero ya con las relaciones
+        //posts viene del modelo de User, que es una relacion
+        $request->user()->posts()->create([
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
+            'imagen' => $request->imagen,
+            'user_id' => auth()->user()->id
+        ]);
 
         return redirect()->route('posts.index', auth()->user()->username);
     }
