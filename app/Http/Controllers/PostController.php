@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    //decimos que el usuario debe de estar autenticado para poder acceder a cualquiera de los metodos de abajo
     public function __construct(){
-        //protegemos las vistas, dado que para poder interactuar (dar like, comentar, ect) debe tener cuenta el usuario
-        $this->middleware('auth');
+        //una vez protegidas damos el acceso a algunos metodos pero si por ejemplo quiero comentar y no esta 
+        //autenticado no podra
+        $this->middleware('auth')->except(['show', 'index']);
     }
 
     public function index(User $user){

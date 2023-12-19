@@ -6,7 +6,7 @@
 @endsection
 
 @section('contenido')
-    <div class="container mx-auto flex">
+    <div class="container mx-auto md:flex">
         <div class="md:w-1/2">
             <img src="{{asset('uploads') . '/' . $post->imagen}}" alt="Imagen del post {{$post->imagen}}">
 
@@ -22,9 +22,17 @@
         </div>
         <div class="md:w-1/2 p-5">
             <div class="shadow bg-white p-5 mb-5">
+                @auth
+                    
                 <p class="text-xl font-bold text-center mb-4">Agrega un nuevo comentario</p>
+                @if (session('mensaje'))
+                    <div class="bg-green-500 p-2 rounded-lg mb-6 text-white text-center uppercase font-bold">
+                        {{session('mensaje')}}
+                    </div>
+                @endif
 
-                <form action="">
+                <form action="{{ route('comentarios.store', ['post'=>$post, 'user'=>$user])}}" method="POST">
+                    @csrf
                     <div class="mb-5">
                         <label for="comentario" class="mb-2 block uppercase text-gray-500 font-bold"> Comentario</label>
                         {{-- con @error dentro de la clase podemos validar que si hay un error ponga ciertas clases --}}
@@ -44,6 +52,7 @@
                             w-full p-3 text-white rounded-lg"
                 >
                 </form>
+                @endauth
             </div>
         </div>
     </div>
