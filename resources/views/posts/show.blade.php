@@ -22,7 +22,9 @@
                 {{-- Protegemos mediante autenticacion, para que solo el dueño pueda verlo --}}
                 @auth
                     @if($post->user_id === auth()->user()->id) {{-- si el id del post del usuario es el mismo que el que esta autenticado puede verlo --}}
-                        <form action="">
+                        <form action="{{route('posts.destroy', ['post'=> $post] )}}" method="POST">
+                            @method('DELETE')
+                            @csrf
                             <input type="submit"
                                     value="Eliminar publicación"
                                     class="bg-red-500 hover:bg-red-600 p-2 rounded text-white font-bold mt-4 cursor-pointer"        
