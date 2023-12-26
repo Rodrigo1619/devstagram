@@ -52,4 +52,9 @@ class User extends Authenticatable
     /* public function posts(){
         return $this->hasMany(Post::class, 'id_algo');
     } */
+
+    //se usara en likeController
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
 }
