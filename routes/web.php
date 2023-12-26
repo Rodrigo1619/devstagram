@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\RegisterController;
 
 /*
@@ -31,18 +32,21 @@ Route::get('/register', [RegisterController::class, 'index']) ->name('register')
 Route::post('/register',[RegisterController::class, 'store']);
 
 Route::get('/login', [LoginController::class, 'index']) ->name('login');
-Route::post('/login', [LoginController::class, 'store']) ->name('login');
+Route::post('/login', [LoginController::class, 'store']);
 
 Route::post('/logout', [LogoutController::class, 'store']) ->name('logout');
 
-/* Route::get('/muro', [PostController::class,'index']) ->name('posts.index');*/
-//le pongo {} y lo que esta dentro se convierte en una variable, y para que funcione se haran cambios en el controller
-//esto es para que se logre ver el nombre del usuario en la ruta
-//despues de los : se le pone el valor que se tomara de la base de datos
-Route::get('/{user:username}', [PostController::class,'index']) ->name('posts.index');
+//perfil
+Route::get('/editarPerfil', [PerfilController::class, 'index'])->name('perfil.index');
+Route::post('/editarPerfil', [PerfilController::class, 'store'])->name('perfil.store');
+
+
+
 Route::get('/posts/create',[PostController::class,'create']) ->name('posts.create');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 //mostrar el nombre de usuario y de ahi el post
+
+//rutas con varaibles
 Route::get('/{user:username}/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::post('/{user:username}/posts/{post}', [ComentarioController::class, 'store'])->name('comentarios.store');
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
@@ -52,3 +56,8 @@ Route::post('/imagenes',[ImagenController::class, 'store'])->name('imagenes.stor
 //likes
 Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('posts.likes.store');
 Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('posts.likes.destroy');
+
+
+Route::get('/{user:username}', [PostController::class,'index']) ->name('posts.index');
+
+
