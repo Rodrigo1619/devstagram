@@ -42,7 +42,10 @@
                         </form>
                     @endif
                 @endauth
-                <p>0 likes</p>
+                {{-- laravel ya tiene la relacion de post con like, entonces mostramos los likes --}}
+                <p class="font-bold">{{$post->likes->count()}} 
+                    <span class="font-normal">likes</span> 
+                </p>
             </div>
 
                 <p class="font-bold"> {{$post->user->username}}</p>
