@@ -37,8 +37,8 @@ Route::post('/login', [LoginController::class, 'store']);
 Route::post('/logout', [LogoutController::class, 'store']) ->name('logout');
 
 //perfil
-Route::get('/editarPerfil', [PerfilController::class, 'index'])->name('perfil.index');
-Route::post('/editarPerfil', [PerfilController::class, 'store'])->name('perfil.store');
+Route::get('/editar-perfil', [PerfilController::class, 'index'])->name('perfil.index');
+Route::post('/editar-perfil', [PerfilController::class, 'store'])->name('perfil.store');
 
 
 
