@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\FollowerController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
@@ -22,9 +23,8 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
-Route::get('/', function () {
-    return view('principal');
-});
+//como tenemos el invoke en el controller, ya no hace falta el index
+Route::get('/', HomeController::class)->name('home');
 
 //pasamos el controlador creado, pero decimos que queremos la clase con el ::class y cual es el metodo que queremos usar
 //cuando hacemos el -> name es como estamos nombrando a la ruta y eso ayuda para no ir a cambiar en todas las referencias hechas en las vistas
