@@ -31,17 +31,50 @@
                 </div>
 
                 <p class=" text-gray-800 text-sm mb-3 mt-5 font-bold">
-                    0
-                    <span class="font-normal"> Seguidores</span>
+                    {{$user->followers->count()}}
+                    {{-- con choice le pasamos como un enum de lo que se le muestra al usuario y depende de la cantidad
+                        del count se le mostrara al usuario --}}
+                    <span class="font-normal"> @choice('Seguidor|Seguidores', $user->followers->count())</span>
                 </p>
+
                 <p class=" text-gray-800 text-sm mb-3 font-bold">
-                    0
+                    {{$user->followings->count()}}
                     <span class="font-normal"> Siguiendo</span>
                 </p>
+
                 <p class=" text-gray-800 text-sm mb-3 font-bold">
                     {{$user->posts->count()}}
                     <span class="font-normal"> Posts</span>
                 </p>
+
+                {{-- boton para seguir y dejar de seguir --}}
+                @auth    
+                    {{-- El propio usuario no puede ver los botones en su perfil --}}
+                    
+                    @if($user->id != auth()->user()->id)
+                    {{-- siguiendo viene del modelo User --}}
+                    {{-- $user es la persona que estamos visitando el perfil y auth()->user la persona que lo visita--}}
+                        @if(!$user->siguiendo(auth()->user()) )
+
+                            <form action="{{ route('users.follow', ['user'=> $user]) }}" method="POST">
+                                @csrf
+
+                                <input type="submit" 
+                                class="bg-blue-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer"
+                                value="Seguir"/>
+                            </form>
+                        @else    
+                            <form action="{{ route('users.unfollow', ['user'=> $user]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                                <input type="submit" 
+                                class="bg-red-600 text-white uppercase rounded-lg px-3 py-1 text-xs font-bold cursor-pointer"
+                                value="Dejar de seguir"/>
+                            </form>
+                        @endif
+                    @endif
+                @endauth
             </div>
 
         </div>
