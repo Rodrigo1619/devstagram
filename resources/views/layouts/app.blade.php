@@ -10,6 +10,8 @@
         @vite('resources/css/app.css')
         @vite('resources/js/app.js')
 
+        @livewireStyles
+
 
         <!-- Styles -->
     </head>
@@ -68,6 +70,6 @@
             Todos los derechos reservados {{ now() -> year }} <!-- {{}} para poder imprimir codigo de php y now es una funcion que nos ayuda a devolver la fecha y hora, si ponemos el -> year solo devuelve el año -->
         </footer>
         
-        
+        @livewireScripts
     </body>
 </html>
